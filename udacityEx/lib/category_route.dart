@@ -7,9 +7,8 @@ import 'package:udacityEx/unit.dart';
 
 import 'category.dart';
 
-// TODO: Check if we need to import anything
 
-// TODO: Define any constants
+final _backgroundColor = Colors.green[100];
 
 /// Category Route (screen).
 ///
@@ -18,8 +17,16 @@ import 'category.dart';
 ///
 /// While it is named CategoryRoute, a more apt name would be CategoryScreen,
 /// because it is responsible for the UI at the route's destination.
-class CategoryRoute extends StatelessWidget {
+// TODO: Make CategoryRoute a StatefulWidget
+class CategoryRoute extends StatefulWidget {
   const CategoryRoute();
+
+  @override
+  _CategoryRouteState createState() => _CategoryRouteState();
+}
+
+class _CategoryRouteState extends State<CategoryRoute> {
+  final _categories = <Category>[];
 
   static const _categoryNames = <String>[
     'Length',
@@ -35,14 +42,30 @@ class CategoryRoute extends StatelessWidget {
   static const _baseColors = <Color>[
     Colors.teal,
     Colors.orange,
-    Colors.pink,
-    Colors.blue,
+    Colors.pinkAccent,
+    Colors.blueAccent,
     Colors.yellow,
-    Colors.green,
-    Colors.purple,
+    Colors.greenAccent,
+    Colors.purpleAccent,
     Colors.red,
   ];
 
+  @override
+  void initState() {
+    super.initState();
+    for (var i = 0; i < _categoryNames.length; i++) {
+      _categories.add(Category(
+        name: _categoryNames[i],
+        color: _baseColors[i],
+        iconLocation: Icons.cake,
+        units: _retrieveUnitList(_categoryNames[i]),
+      ));
+    }
+  }
+
+  /// Makes the correct number of rows for the list view.
+  ///
+  /// For portrait, we use a [ListView].
   Widget _buildCategoryWidgets(List<Widget> categories) {
     return ListView.builder(
       itemBuilder: (BuildContext context, int index) => categories[index],
@@ -60,40 +83,31 @@ class CategoryRoute extends StatelessWidget {
       );
     });
   }
-  
-  @override
+
   Widget build(BuildContext context) {
-    // TODO: Create a list of the eight Categories, using the names and colors
-    final categories = <Category>[];
+    // TODO: Instead of re-creating a list of Categories in every build(),
+    // save this as a variable inside the State object and create
+    // the list at initialization (in initState()).
+    // This way, you also don't have to pass in the list of categories to
+    // _buildCategoryWidgets()
 
-    for (var i = 0; i < _categoryNames.length; i++) {
-      categories.add(Category(
-        name: _categoryNames[i],
-        color: _baseColors[i],
-        iconLocation: Icons.cake,
-        units: _retrieveUnitList(_categoryNames[i]),
-      ));
-    }
-
-    // TODO: Create a list view of the Categories A list of 8 Categories should be shown on the screen.
-    // TODO: You should be able to scroll down the list. There should be 8.0 horizontal padding around this list.
-    final listView =
-    Container(
-      color: Colors.green[100],
+    final listView = Container(
+      color: _backgroundColor,
       padding: EdgeInsets.symmetric(horizontal: 8.0),
-      child: _buildCategoryWidgets(categories),
+      child: _buildCategoryWidgets(_categories),
     );
 
-    // TODO: Create an App Bar The AppBar text should say 'Unit Converter' with a font size of 30.0, and an elevation of 0.0.
-    // TODO: The AppBar and app body should be the same color. In our example, we use Colors.green[100].
     final appBar = AppBar(
       elevation: 0.0,
-      title: Text('Unit Converter',
-          style: TextStyle(
-              fontSize: 30.0,
-              color: Colors.black),
+      title: Text(
+        'Unit Converter',
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 30.0,
+        ),
       ),
-      backgroundColor: Colors.green[100],
+      centerTitle: true,
+      backgroundColor: _backgroundColor,
     );
 
     return Scaffold(

@@ -4,8 +4,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
-
 import 'package:udacityEx/unit.dart';
+
 
 /// Converter screen where users can input amounts to convert.
 ///
@@ -13,37 +13,46 @@ import 'package:udacityEx/unit.dart';
 ///
 /// While it is named ConverterRoute, a more apt name would be ConverterScreen,
 /// because it is responsible for the UI at the route's destination.
-class ConverterRoute extends StatelessWidget {
-  /// Units for this [Category].
-  final List<Unit> units;
+// TODO: Make ConverterRoute a StatefulWidget
+class ConverterRoute extends StatefulWidget {
+  /// Color for this [Category].
   final Color color;
 
+  /// Units for this [Category].
+  final List<Unit> units;
+
   /// This [ConverterRoute] requires the color and units to not be null.
-  // TODO: Pass in the [Category]'s color
   const ConverterRoute({
-    @required this.units,
     @required this.color,
-  }) : assert(units != null),
-        assert(color != null);
+    @required this.units,
+  })  : assert(color != null),
+        assert(units != null);
 
   @override
+  _ConverterRouteState createState() => _ConverterRouteState();
+}
+
+class _ConverterRouteState extends State<ConverterRoute> {
+  // TODO: Create State object for the ConverterRoute
+
   Widget build(BuildContext context) {
     // Here is just a placeholder for a list of mock units
-    final unitWidgets = units.map((Unit unit) {
-      // TODO: Set the color for this Container
+    // TODO: Once the build() function is inside the State object,
+    // you'll have to reference this using `widget.units`
+    final unitWidgets = widget.units.map((Unit unit) {
       return Container(
+        color: widget.color,
         margin: EdgeInsets.all(8.0),
         padding: EdgeInsets.all(16.0),
-        color: color,
         child: Column(
           children: <Widget>[
             Text(
               unit.name,
-              style: Theme.of(context).textTheme.headline6,
+              style: Theme.of(context).textTheme.headline,
             ),
             Text(
               'Conversion: ${unit.conversion}',
-              style: Theme.of(context).textTheme.subtitle1,
+              style: Theme.of(context).textTheme.subhead,
             ),
           ],
         ),
