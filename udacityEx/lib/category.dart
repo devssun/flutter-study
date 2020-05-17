@@ -48,7 +48,7 @@ class Category extends StatelessWidget {
   /// Navigates to the [ConverterRoute].
   void _navigateToConverter(BuildContext context) {
     // TODO: Using the Navigator, navigate to the [ConverterRoute]
-    Navigator.push(context, MaterialPageRoute<Null>(
+    Navigator.push(context, MaterialPageRoute<Null>(  // <> 에는 반환되는 타입이다
       builder: (BuildContext context) {
         return Scaffold(appBar: AppBar(
           elevation: 1.0,
